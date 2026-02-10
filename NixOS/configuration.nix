@@ -15,7 +15,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos-btw";
+  networking.hostName = "catacombs";
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Sao_Paulo";
@@ -43,8 +43,6 @@
     ];
   };
 
-  programs.firefox.enable = true;
-  services.syncthing.enable = true;
   services.sshd.enable = true;
   virtualisation.docker.enable = true;
 

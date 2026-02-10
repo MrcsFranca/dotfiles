@@ -45,6 +45,12 @@
 
   services.sshd.enable = true;
   virtualisation.docker.enable = true;
+  services.k3s.enable = true;
+  services.k3s.extraFlags = toString [
+    "--write-kubeconfig-mode 644"
+  ];
+
+  networking.firewall.allowedTCPPorts = [ 6443 ];
 
   environment.systemPackages = with pkgs; [
     vim
@@ -53,6 +59,7 @@
     git
     curl
     htop
+    k3s
   ];
 
   fonts.packages = with pkgs; [

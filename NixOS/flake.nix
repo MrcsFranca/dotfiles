@@ -1,5 +1,5 @@
 {
-    description = "NixOs";
+    description = "NixOs flake file";
 
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-25.11";
@@ -10,7 +10,7 @@
     };
 
     outputs = { self, nixpkgs, home-manager, ...}: {
-        nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
+        nixosConfigurations.catacombs = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
                 ./configuration.nix

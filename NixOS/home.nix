@@ -1,4 +1,13 @@
 { config, pkgs, ... }:
+let
+    dotfiles = "${config.home.homeDirectory}/nixos/config";
+    create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+    configs = {
+        qtile = "qtile";
+        nvim = "nvim";
+        alacritty = "alacritty";
+    };
+in
 
 {
     home.username = "marcos";
@@ -13,10 +22,24 @@
             nv = "nvim";
         };
     };
-    xdg.configFile."qtile" = {
-        source = config.lib.file.mkOutOfStoreSymlink "/home/marcos/nixos/config/qtile/";
+
+    xdg.configFile = builtins.mapAttrs (name: subpath: {
+        source = create_symlink "${dotfiles}/${subpath}";
         recursive = true;
-    };
+    }) configs;
+
+#    xdg.configFile."qtile" = {
+#        source = create_symlink "${dotfiles}/qtile/";
+#        recursive = true;
+#    };
+#    xdg.configFile."nvim" = {
+#        source = create_symlink "${dotfiles}/nvim/";
+#        recursive = true;
+#    };
+#    xdg.configFile."alacritty" = {
+#        source = create_symlink "${dotfiles}/alacritty/";
+#        recursive = true;
+#    };
     programs.firefox = {
         enable = true;
         profiles.marcos = {
@@ -31,8 +54,6 @@
       };
     };
 
-    home.file.".config/nvim".source = ./config/nvim;
-    home.file.".config/alacritty".source = ./config/alacritty;
     home.packages = with pkgs; [
         neovim
         nil

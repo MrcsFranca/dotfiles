@@ -11,6 +11,16 @@ terminal = guess_terminal()
 
 myTerm = "alacritty"
 
+def get_volume():
+    try:
+        vol = subprocess.check_output(["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]).decode("utf-8").strip()
+        if "MUTED" in vol:
+            return "Muted"
+        vol_number = float(vol.split(": ")[1].split(" ")[0])
+        return f"{int(vol_number * 100)}%"
+    except:
+        return "N/A"
+
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
@@ -60,6 +70,15 @@ keys = [
         lazy.spawn('sh -c "maim -s | xclip -selection clipboard -t image/png -i"'),
         desc="Screenshot"
     ),
+
+    # Controla o volume
+    Key([], "XF86AudioLowerVolume", lazy.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")), #abaixa o volume em 5%
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+")), #Aumenta o volume em 5%
+    Key([], "XF86AudioMute", lazy.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")), #Aumenta o volume em 5%
+
+    # Controla o brilho
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%+")), #Aumenta o brilho em 10%
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")), #Diminui o brilho em 10%
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -257,7 +276,9 @@ screens = [
                     },
                 ),
                 sep,
-                widget.Volume(
+                widget.GenPollText(
+                    func = get_volume,
+                    update_interval = 0.3,
                     foreground = colors[7],
                     padding = 8,
                     fmt = 'Vol: {}',
@@ -275,8 +296,11 @@ screens = [
             margin=[0, 0, 0, 0],
             size=30
         ),
+        wallpaper = '/home/marcos/Images/.background-image/forest-wallpaper.png',
+        wallpaper_mode = 'fill'
     ),
 ]
+
 
 # Drag floating layouts.
 mouse = [

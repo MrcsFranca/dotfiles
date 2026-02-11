@@ -60,6 +60,7 @@
     curl
     htop
     k3s
+    brightnessctl
   ];
 
   fonts.packages = with pkgs; [

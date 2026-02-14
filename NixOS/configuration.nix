@@ -23,6 +23,17 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "br-abnt2";
 
+  system.autoUpgrade = {
+      enable = true;
+      allowReboot = false;
+  };
+
+  nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+  };
+
   services.displayManager.ly.enable = true;
 
   services.xserver = {
@@ -59,7 +70,6 @@
     git
     curl
     htop
-    k3s
     brightnessctl
   ];
 

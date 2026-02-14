@@ -64,21 +64,16 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "d", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
-    Key(
-        [mod],
-        "s",
-        lazy.spawn('sh -c "maim -s | xclip -selection clipboard -t image/png -i"'),
-        desc="Screenshot"
-    ),
+    Key([], "Print", lazy.spawn('flameshot gui'), desc="Screenshot with flameshot"),
 
-    # Controla o volume
-    Key([], "XF86AudioLowerVolume", lazy.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")), #abaixa o volume em 5%
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+")), #Aumenta o volume em 5%
-    Key([], "XF86AudioMute", lazy.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")), #Aumenta o volume em 5%
+    # Volume control
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+")), #increase 5%
+    Key([], "XF86AudioLowerVolume", lazy.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")), #decrease 5%
+    Key([], "XF86AudioMute", lazy.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")), #mute
 
     # Controla o brilho
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%+")), #Aumenta o brilho em 10%
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")), #Diminui o brilho em 10%
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%+")), #increase 10%
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")), #decrease 10%
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -229,7 +224,7 @@ screens = [
                 ),
                 widget.GenPollText(
                     update_interval = 300,
-                    func = lambda: subprocess.check_output("printf $(uname)", shell=True, text=True),
+                    func = lambda: subprocess.check_output("printf $(hostname)", shell=True, text=True),
                     foreground = colors[3],
                     padding = 8,
                     fmt = '{}',

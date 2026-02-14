@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
     dotfiles = "${config.home.homeDirectory}/nixos/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
@@ -20,6 +20,8 @@ in
         enable = true;
         shellAliases = {
             nv = "nvim";
+            lynxd = "lynx duckduckgo.com";
+            w3md = "w3m duckduckgo.com";
         };
     };
 
@@ -44,13 +46,13 @@ in
         enable = true;
         profiles.marcos = {
     	    settings = {
-    		"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
-    		"layout.css.prefers-color-scheme.content-override" = 0;
-    		"ui.systemUsesDarkTheme" = 1;
-    		"devtools.theme" = "dark";
-    		"browser.theme.content-theme" = 0;
-    		"browser.theme.toolbar-theme" = 0;
-	    };
+            "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+            "layout.css.prefers-color-scheme.content-override" = 0;
+            "ui.systemUsesDarkTheme" = 1;
+            "devtools.theme" = "dark";
+            "browser.theme.content-theme" = 0;
+            "browser.theme.toolbar-theme" = 0;
+	      };
       };
     };
 
@@ -63,5 +65,9 @@ in
         zotero
         ranger
         lynx
+        w3m
+        flameshot
+        mpv
+        youtube-tui
     ];
 }

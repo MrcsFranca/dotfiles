@@ -23,11 +23,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "br-abnt2";
 
-  system.autoUpgrade = {
-      enable = true;
-      allowReboot = false;
-  };
-
   nix.gc = {
       automatic = true;
       dates = "weekly";
@@ -55,11 +50,16 @@
   };
 
   services.sshd.enable = true;
-  virtualisation.docker.enable = true;
+  systemd.services.sshd.wantedBy = lib.mkForce [];
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;
+  };
   services.k3s.enable = true;
   services.k3s.extraFlags = toString [
     "--write-kubeconfig-mode 644"
   ];
+  systemd.services.k3s.wantedBy = lib.mkForce [];
 
   networking.firewall.allowedTCPPorts = [ 6443 ];
 
@@ -71,6 +71,8 @@
     curl
     htop
     brightnessctl
+    openvpn
+    update-resolv-conf
   ];
 
   fonts.packages = with pkgs; [

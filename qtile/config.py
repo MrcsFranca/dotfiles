@@ -63,7 +63,8 @@ keys = [
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "d", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
+    Key([mod], "Alt_L", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
+    Key([mod], "r", lazy.spawn("alacritty -e ranger"), desc='Run ranger'),
     Key([], "Print", lazy.spawn('flameshot gui'), desc="Screenshot with flameshot"),
 
     # Volume control
@@ -116,25 +117,39 @@ for i in groups:
         ]
     )
 
+#colors = [
+#    ["#1a1b26", "#1a1b26"],  # bg        (primary.background)
+#    ["#a9b1d6", "#a9b1d6"],  # fg        (primary.foreground)
+#    ["#32344a", "#32344a"],  # color01   (normal.black)
+#    ["#f7768e", "#f7768e"],  # color02   (normal.red)
+#    ["#9ece6a", "#9ece6a"],  # color03   (normal.green)
+#    ["#e0af68", "#e0af68"],  # color04   (normal.yellow)
+#    ["#7aa2f7", "#7aa2f7"],  # color05   (normal.blue)
+#    ["#ad8ee6", "#ad8ee6"],  # color06   (normal.magenta)
+#    ["#0db9d7", "#0db9d7"],  # color15   (bright.cyan)
+#    ["#444b6a", "#444b6a"]   # color[9]  (bright.black)
+#]
+
 colors = [
-    ["#1a1b26", "#1a1b26"],  # bg        (primary.background)
-    ["#a9b1d6", "#a9b1d6"],  # fg        (primary.foreground)
-    ["#32344a", "#32344a"],  # color01   (normal.black)
-    ["#f7768e", "#f7768e"],  # color02   (normal.red)
-    ["#9ece6a", "#9ece6a"],  # color03   (normal.green)
-    ["#e0af68", "#e0af68"],  # color04   (normal.yellow)
-    ["#7aa2f7", "#7aa2f7"],  # color05   (normal.blue)
-    ["#ad8ee6", "#ad8ee6"],  # color06   (normal.magenta)
-    ["#0db9d7", "#0db9d7"],  # color15   (bright.cyan)
-    ["#444b6a", "#444b6a"]   # color[9]  (bright.black)
+    ["#1a1e2a", "#1a1e2a"],
+    ["#ffffff", "#ffffff"],
+    ["#1d2430", "#1d2430"],
+    ["#fa5ead", "#fa5ead"],
+    ["#00fbad", "#00fbad"],
+    ["#ffdf5f", "#ffdf5f"],
+    ["#5eadfc", "#5eadfc"],
+    ["#fa5ead", "#fa5ead"],
+    ["#6a6f87", "#6a6f87"],
+    ["#293545", "#293545"]
 ]
+
 
 # helper in case your colors are ["#hex", "#hex"]
 def C(x): return x[0] if isinstance(x, (list, tuple)) else x
 
 layout_theme = {
     "border_width" : 2,
-    "margin" : 1,
+    "margin" : 5,
     "border_focus" : colors[6],
     "border_normal" : colors[0],
 }
@@ -146,8 +161,8 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(**layout_theme),
-    # layout.MonadWide(),
+    # layout.MonadTall(**layout_theme),
+    layout.MonadWide(**layout_theme),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),

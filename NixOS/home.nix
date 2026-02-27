@@ -2,7 +2,7 @@
 let
     dotfiles = "${config.home.homeDirectory}/nixos/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-    configs = {
+    configs = { 
         qtile = "qtile";
         nvim = "nvim";
         alacritty = "alacritty";
@@ -14,14 +14,23 @@ in
     home.homeDirectory = "/home/marcos";
     home.stateVersion = "25.11";
 
-    programs.git.enable = true;
+    programs.git = {
+      enable = true;
+      includes = [{
+        path = "/home/marcos/.config/git/config.local";
+      }];
+      settings = {
+        init.defaultBranch = "main";
+      };
+    };
     services.syncthing.enable = true;
+    #systemd.user.services.syncthing.Install.wantedBy = lib.mkForce [];
     programs.bash = {
         enable = true;
         shellAliases = {
             nv = "nvim";
-            lynxd = "lynx duckduckgo.com";
             w3md = "w3m duckduckgo.com";
+            girus = "/home/marcos/.local/bin/girus";
         };
     };
 
@@ -64,10 +73,12 @@ in
         obsidian
         zotero
         ranger
-        lynx
         w3m
         flameshot
         mpv
         youtube-tui
+        rofi
+        kind
+        calcure
     ];
 }

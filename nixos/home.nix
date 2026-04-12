@@ -72,28 +72,40 @@ in {
     };
   };
 
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+    style.name = "kvantum";
+  };
+
   home.packages = with pkgs; [
-    neovim
-    nil
-    nixpkgs-fmt
-    gcc
+    #Personal
     obsidian
-    zotero
-    ranger
-    w3m
     flameshot
     mpv
     youtube-tui
     rofi
+    w3m
+    zotero
+    spotify-player
+    ranger
+    # Development
+    neovim
     kind
-    calcure
+    burpsuite
+    dbeaver-bin
+    insomnia
+    nil
+    nixpkgs-fmt
+    gcc
     alejandra
     ripgrep
-    burpsuite
     nodejs_24
     nodePackages.typescript
     nodePackages.typescript-language-server
-    dbeaver-bin
-    insomnia
+    # qt configuration for some GUI
+    libsForQt5.qtstyleplugin-kvantum
+    qt6Packages.qtstyleplugin-kvantum
+    libsForQt5.qt5ct
   ];
 }

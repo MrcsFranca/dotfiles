@@ -55,24 +55,24 @@
     autoRepeatInterval = 35;
 
     windowManager.qtile.enable = true;
-    #videoDrivers = [ "nvidia" ];
+    videoDrivers = ["nvidia"];
   };
 
-  #hardware.graphics = {
-  #    enable = true;
-  #    enable32Bit = true;
-  #};
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
-  #hardware.nvidia = {
-  #    modesetting.enable = true;
-  #    open = false;
-  #    nvidiaSettings = true;
-  #    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #};
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
   users.users.marcos = {
     isNormalUser = true;
-    extraGroups = ["networkmanager" "wheel" "docker" "vboxusers"];
+    extraGroups = ["networkmanager" "wheel" "docker" "vboxusers" "wireshark"];
     packages = with pkgs; [
       tree
     ];
@@ -92,6 +92,11 @@
 
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = ["vboxusers"];
+
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
 
   networking.firewall.allowedTCPPorts = [6443];
 

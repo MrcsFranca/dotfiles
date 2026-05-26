@@ -89,6 +89,7 @@ in {
     zotero
     spotify-player
     ranger
+    ueberzug
     # Development
     neovim
     kind

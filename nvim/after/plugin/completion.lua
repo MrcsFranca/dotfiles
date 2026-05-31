@@ -26,8 +26,8 @@ cmp.setup({
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then cmp.select_next_item() else fallback() end
         end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function()
-            if cmp.visible() then cmp.select_prev_item() end
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then cmp.select_prev_item() else fallback() end
         end, { "i", "s" }),
     }),
     sources = {

@@ -103,7 +103,7 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-    alacritty
+    kitty
     git
     curl
     htop

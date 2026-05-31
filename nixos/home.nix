@@ -34,10 +34,24 @@ in {
     enable = true;
     shellAliases = {
       n = "nvim";
-      w3 = "w3m duckduckgo.com";
+      w3m = "kitty -o window_padding_width=\"20 300\" -e w3m";
+      w3 = "kitty -o window_padding_width=\"20 300\" -e w3m ddg.gg 2>/dev/null &";
       girus = "/home/marcos/.local/bin/girus";
     };
+
+    initExtra = ''
+      export VISUAL="nvim"
+      export EDITOR="nvim"
+
+      set -o vi
+    '';
   };
+  home.file.".inputrc".text = ''
+    set show-mode-in-prompt on
+
+    set vi-ins-mode-string "\1\e[1;32m\2[I]\1\e[0m\2 "
+    set vi-cmd-mode-string "\1\e[1;34m\2[N]\1\e[0m\2 "
+  '';
 
   xdg.configFile =
     builtins.mapAttrs (name: subpath: {
@@ -89,7 +103,6 @@ in {
     zotero
     spotify-player
     ranger
-    ueberzug
     # Development
     neovim
     kind
@@ -99,6 +112,7 @@ in {
     nil
     nixpkgs-fmt
     gcc
+    unzip
     alejandra
     ripgrep
     nodejs_24

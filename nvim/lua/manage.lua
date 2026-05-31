@@ -19,7 +19,13 @@ local function ensure(spec)
         vim.fn.system(cmd)
     end
 
-    vim.opt.rtp:append(path)
+    -- CORREÇÃO: Carrega o plugin e também a pasta 'after' dele!
+    vim.opt.rtp:prepend(path)
+    local after_path = path .. "/after"
+    if vim.uv.fs_stat(after_path) then
+        vim.opt.rtp:append(after_path)
+    end
+
     local lua_path = path .. "/lua"
     if vim.uv.fs_stat(lua_path) then
         package.path = package.path .. ";" .. lua_path .. "/?.lua;" .. lua_path .. "/?/init.lua"

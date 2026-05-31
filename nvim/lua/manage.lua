@@ -19,7 +19,6 @@ local function ensure(spec)
         vim.fn.system(cmd)
     end
 
-    -- CORREÇÃO: Carrega o plugin e também a pasta 'after' dele!
     vim.opt.rtp:prepend(path)
     local after_path = path .. "/after"
     if vim.uv.fs_stat(after_path) then

@@ -7,9 +7,9 @@ import subprocess
 
 
 mod = "mod4"
-terminal = guess_terminal()
+terminal = "kitty"
 
-myTerm = "alacritty"
+myTerm = "kitty"
 
 def get_volume():
     try:
@@ -64,7 +64,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "Alt_L", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
-    Key([mod], "r", lazy.spawn("alacritty -e ranger"), desc='Run ranger'),
+    Key([mod], "r", lazy.spawn("kitty -e ranger"), desc='Run ranger'),
     Key([], "Print", lazy.spawn('flameshot gui'), desc="Screenshot with flameshot"),
 
     # Volume control

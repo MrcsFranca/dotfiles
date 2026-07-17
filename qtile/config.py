@@ -188,10 +188,13 @@ screens = [
             widgets = [
                 widget.Spacer(length = 8),
                 widget.Image(
-                    filename = "~/.config/qtile/icons/tonybtw.png",
-                    scale = "False",
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("qtilekeys-yad")},
+                    filename = "~/Images/.icon/nixos.png",
+                    scale = True,
+                    margin_y = 5,
+                    margin_x = 1,
+                    mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun -show-icons")},
                 ),
+                sep,
                 widget.Prompt(
                     font = "Ubuntu Mono",
                     fontsize=14,
@@ -265,27 +268,27 @@ screens = [
                     padding = 8,
                     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-disk')},
                     partition = '/',
-                    format = '{uf}{m} free',
+                    format = '{uf:.2f}{m} free',
                     fmt = 'Disk: {}',
                     visible_on_warn = False,
                 ),
                 sep,
-                widget.Battery(
-                    foreground=colors[6],           # pick a palette slot you like
-                    padding=8,
-                    update_interval=5,
-                    format='{percent:2.0%} {char} {hour:d}:{min:02d}',  # e.g. "73% ⚡ 1:45"
-                    fmt='Bat: {}',
-                    charge_char='',               # shown while charging
-                    discharge_char='',            # Nerd icon; use '-' if you prefer plain ascii
-                    full_char='✔',                 # when at/near 100%
-                    unknown_char='?',
-                    empty_char='!',
-                    mouse_callbacks={
-                        'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e upower -i $(upower -e | grep BAT)'),
-                    },
-                ),
-                sep,
+#               widget.Battery(
+#                   foreground=colors[6],           # pick a palette slot you like
+#                   padding=8,
+#                   update_interval=5,
+#                   format='{percent:2.0%} {char} {hour:d}:{min:02d}',  # e.g. "73% ⚡ 1:45"
+#                   fmt='Bat: {}',
+#                   charge_char='',               # shown while charging
+#                   discharge_char='',            # Nerd icon; use '-' if you prefer plain ascii
+#                   full_char='✔',                 # when at/near 100%
+#                   unknown_char='?',
+#                   empty_char='!',
+#                   mouse_callbacks={
+#                       'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e upower -i $(upower -e | grep BAT)'),
+#                   },
+#               ),
+#               sep,
                 widget.GenPollText(
                     func = get_volume,
                     update_interval = 0.3,

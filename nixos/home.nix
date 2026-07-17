@@ -116,8 +116,6 @@ in {
     alejandra
     ripgrep
     nodejs_24
-    nodePackages.typescript
-    nodePackages.typescript-language-server
     # qt configuration for some GUI
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum

@@ -55,6 +55,19 @@
     autoRepeatInterval = 35;
 
     windowManager.qtile.enable = true;
+    videoDrivers = ["nvidia"];
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   users.users.marcos = {
@@ -70,7 +83,6 @@
   virtualisation.docker = {
     enable = true;
     enableOnBoot = false;
-    package = pkgs.docker;
   };
   services.k3s.enable = true;
   services.k3s.extraFlags = toString [
@@ -84,6 +96,13 @@
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
   };
 
   networking.firewall.allowedTCPPorts = [6443];

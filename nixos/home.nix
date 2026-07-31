@@ -103,6 +103,7 @@ in {
     zotero
     spotify-player
     ranger
+    easyeffects
     # Development
     neovim
     kind

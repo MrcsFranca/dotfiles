@@ -6,7 +6,34 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  i3lockCmd = pkgs.writeShellScript "i3lock-wrapper" ''
+    ${pkgs.i3lock-color}/bin/i3lock-color \
+      --color=1a1e2a \
+      --inside-color=1a1e2aff \
+      --ring-color=5eadfcff \
+      --line-uses-inside \
+      --separator-color=6a6f87ff \
+      --insidever-color=1d2430ff \
+      --ringver-color=00fbadff \
+      --insidewrong-color=1d2430ff \
+      --ringwrong-color=fa5eadff \
+      --verif-color=00fbadff \
+      --wrong-color=fa5eadff \
+      --time-color=ffffffff \
+      --date-color=ffffffff \
+      --layout-color=ffffffff \
+      --keyhl-color=ffdf5fff \
+      --bshl-color=fa5eadff \
+      --time-str="%H:%M:%S" \
+      --date-str="%A, %d de %B" \
+      --time-font="JetBrainsMono Nerd Font" \
+      --date-font="JetBrainsMono Nerd Font" \
+      --clock \
+      --indicator \
+      --radius=150
+  '';
+in {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -46,6 +73,12 @@
   '';
 
   services.displayManager.ly.enable = true;
+  services.displayManager.ly.settings = {
+    animation = "matrix";
+    bigclock = true;
+  };
+
+  programs.i3lock.enable = true;
 
   services.xserver = {
     enable = true;
@@ -58,6 +91,17 @@
     videoDrivers = ["nvidia"];
   };
 
+  # autolock in suspend mode with xserver
+  programs.xss-lock = {
+    enable = true;
+    lockerCommand = "${i3lockCmd}";
+  };
+  services.xserver.xautolock = {
+    enable = true;
+    locker = "${i3lockCmd}";
+    time = 15;
+  };
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -68,7 +112,19 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # ppowerManagement
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
   };
+
+  # powerManagement notebook
+  # services.upower.enable = true;
+  #services.logind = {
+  #  extraConfig = ''
+  #    HandleLidSwitch=suspend
+  #    HandlePowerKey=suspend
+  #  '';
+  #};
 
   users.users.marcos = {
     isNormalUser = true;
@@ -113,10 +169,11 @@
     kitty
     git
     curl
-    htop
+    btop
     brightnessctl
     openvpn
     update-resolv-conf
+    i3lock-color
   ];
 
   fonts.packages = with pkgs; [

@@ -102,7 +102,7 @@ in {
     w3m
     zotero
     spotify-player
-    ranger
+    superfile
     easyeffects
     # Development
     neovim

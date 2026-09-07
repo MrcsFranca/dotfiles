@@ -11,6 +11,14 @@ terminal = "kitty"
 
 myTerm = "kitty"
 
+def autostart():
+    subprocess.run([
+        "systemctl", "--user", "import-environment",
+        "DISPLAY", "XAUTHORITY"
+    ])
+    subprocess.run(["systemctl", "--user", "daemon-reload"])
+    subprocess.Popen(["systemctl", "--user", "start", "graphical-session.target"])
+
 def get_volume():
     try:
         vol = subprocess.check_output(["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]).decode("utf-8").strip()
@@ -64,7 +72,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "Alt_L", lazy.spawn("rofi -show drun -show-icons"), desc='Run Launcher'),
-    Key([mod], "r", lazy.spawn("kitty -e ranger"), desc='Run ranger'),
+    Key([mod], "s", lazy.spawn("kitty -e superfile"), desc='Run superfile'),
     Key([], "Print", lazy.spawn('flameshot gui'), desc="Screenshot with flameshot"),
 
     # Volume control
@@ -251,14 +259,14 @@ screens = [
                 widget.CPU(
                     foreground = colors[4],
                     padding = 8,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
+                    mouse_callbacks = {'Button1': lazy.spawn('kitty -e btop')},
                     format="CPU: {load_percent}%",
                 ),
                 sep,
                 widget.Memory(
                     foreground = colors[8],
                     padding = 8,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
+                    mouse_callbacks = {'Button1': lazy.spawn('kitty -e btop')},
                     format = 'Mem: {MemUsed:.0f}{mm}',
                 ),
                 sep,
@@ -266,7 +274,7 @@ screens = [
                     update_interval = 60,
                     foreground = colors[5],
                     padding = 8,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-disk')},
+                    mouse_callbacks = {'Button1': lazy.spawn('notify-disk')},
                     partition = '/',
                     format = '{uf:.2f}{m} free',
                     fmt = 'Disk: {}',
@@ -300,7 +308,7 @@ screens = [
                 widget.Clock(
                     foreground = colors[8],
                     padding = 8,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-date')},
+                    mouse_callbacks = {'Button1': lazy.spawn('notify-date')},
                     format = "%a, %b %d - %H:%M",
                 ),
                 widget.Systray(padding = 6),
@@ -309,7 +317,7 @@ screens = [
             margin=[0, 0, 0, 0],
             size=30
         ),
-        wallpaper = '/home/marcos/Images/.background-image/forest-wallpaper.png',
+        wallpaper = '/home/marcos/Images/.background-image/landscape_illustration.png',
         wallpaper_mode = 'fill'
     ),
 ]

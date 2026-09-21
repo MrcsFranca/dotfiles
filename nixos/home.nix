@@ -74,6 +74,7 @@ in {
   #    };
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     profiles.marcos = {
       settings = {
         "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
@@ -96,12 +97,12 @@ in {
     #Personal
     obsidian
     flameshot
+    ncspot
     mpv
     youtube-tui
     rofi
     w3m
     zotero
-    spotify-player
     superfile
     easyeffects
     # Development

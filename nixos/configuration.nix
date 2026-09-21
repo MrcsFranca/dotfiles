@@ -91,6 +91,14 @@ in {
     videoDrivers = ["nvidia"];
   };
 
+  # to solve the qtile problem
+  services.xserver.windowManager.qtile.package = pkgs.python3.pkgs.qtile.override (old: {
+    buildPythonPackage = argsFn:
+      old.buildPythonPackage (
+        finalAttrs: (argsFn finalAttrs) // {doCheck = false;}
+      );
+  });
+
   # autolock in suspend mode with xserver
   programs.xss-lock = {
     enable = true;

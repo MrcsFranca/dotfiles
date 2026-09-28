@@ -109,15 +109,12 @@ in {
     neovim
     kind
     burpsuite
-    dbeaver-bin
-    insomnia
     nil
     nixpkgs-fmt
     gcc
     unzip
     alejandra
     ripgrep
-    nodejs_24
     # qt configuration for some GUI
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
